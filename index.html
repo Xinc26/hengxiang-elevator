@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO 优化标签 -->
+    <title>上海恒翔电梯工程有限公司 | 电梯安装维修保养 | 恒翔电梯</title>
+    <meta name="description" content="上海恒翔电梯工程有限公司专业提供电梯安装、维修、保养服务。恒翔电梯，安全可靠，服务至上。电话：021-XXXXXXXX">
+    <meta name="keywords" content="恒翔电梯,上海恒翔电梯工程有限公司,电梯安装,电梯维修,电梯保养,上海电梯公司,恒翔,电梯工程">
+    <meta name="author" content="上海恒翔电梯工程有限公司">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="7 days">
+
+    <!-- Open Graph 社交媒体优化 -->
+    <meta property="og:title" content="上海恒翔电梯工程有限公司">
+    <meta property="og:description" content="专业电梯安装、维修、保养服务商">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_CN">
+
+    <!-- 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "name": "上海恒翔电梯工程有限公司",
+        "alternateName": "恒翔电梯",
+        "description": "专业电梯安装、维修、保养服务",
+        "url": "https://www.hengxiang-elevator.com",
+        "telephone": "021-XXXXXXXX",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "上海市",
+            "addressCountry": "CN"
+        },
+        "openingHoursSpecification": {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+            "opens": "08:00",
+            "closes": "18:00"
+        }
+    }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft YaHei', 'PingFang SC', system-ui, sans-serif;
+            background: #0a0a1a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(20px);
+            background: rgba(0, 20, 60, 0.9);
+            border-bottom: 1px solid rgba(0, 150, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 40px;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0096ff, #00d4ff);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: 900;
+            color: #fff;
+            box-shadow: 0 5px 20px rgba(0, 150, 255, 0.4);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-name {
+            font-size: 22px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-slogan {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.6);
+            letter-spacing: 4px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            padding: 5px 0;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #0096ff, #00d4ff);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00d4ff;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-phone {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #0096ff, #00d4ff);
+            border-radius: 50px;
+            color: #fff;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 150, 255, 0.4);
+        }
+
+        .nav-phone:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 150, 255, 0.6);
+        }
+
+        /* 英雄区域 */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #0a0a2e 0%, #0d1b3e 50%, #0a1628 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -30%;
+            width: 80%;
+            height: 150%;
+            background: radial-gradient(ellipse, rgba(0, 150, 255, 0.15), transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text {
+            animation: slideInLeft 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 150, 255, 0.15);
+            border: 1px solid rgba(0, 150, 255, 0.3);
+            border-radius: 50px;
+            color: #00d4ff;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 25px;
+        }
+
+        .hero-title {
+            font-size: clamp(36px, 5vw, 64px);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 25px;
+        }
+
+        .hero-title .highlight {
+            background: linear-gradient(135deg, #0096ff, #00d4ff, #00ffcc);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-flow 3s ease infinite;
+        }
+
+        @keyframes gradient-flow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.8;
+            margin-bottom: 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #0096ff, #00d4ff);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px rgba(0, 150, 255, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 150, 255, 0.5);
+        }
+
+        .btn-outline {
+            padding: 16px 40px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: transparent;
+            border: 2px solid rgba(0, 150, 255, 0.5);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-outline:hover {
+            border-color: #00d4ff;
+            background: rgba(0, 150, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            color: #00d4ff;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: slideInRight 1s ease;
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .elevator-card {
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.1), rgba(0, 212, 255, 0.05));
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(20px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .elevator-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0096ff, #00d4ff, #00ffcc);
+        }
+
+        .elevator-icon {
+            font-size: 120px;
+            text-align: center;
+            margin-bottom: 30px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .elevator-info {
+            text-align: center;
+        }
+
+        .elevator-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .elevator-features {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+        }
+
+        .feature-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 150, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        /* 服务区域 */
+        .section {
+            padding: 100px 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 70px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(0, 150, 255, 0.1);
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            border-radius: 50px;
+            color: #00d4ff;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-desc {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #0096ff, #00d4ff);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 150, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .service-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.2), rgba(0, 212, 255, 0.1));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            margin-bottom: 25px;
+        }
+
+        .service-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .service-desc {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .service-link {
+            color: #00d4ff;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: gap 0.3s;
+        }
+
+        .service-link:hover {
+            gap: 15px;
+        }
+
+        /* 优势区域 */
+        .advantages {
+            background: linear-gradient(135deg, #0d1b3e, #0a1628);
+            padding: 100px 0;
+        }
+
+        .advantages-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .advantage-item {
+            text-align: center;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        .advantage-item:hover {
+            transform: translateY(-10px);
+            border-color: rgba(0, 150, 255, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .advantage-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .advantage-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+
+        .advantage-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        /* 案例区域 */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .case-card {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            aspect-ratio: 4/3;
+            background: linear-gradient(135deg, #1a1a3e, #0d1b3e);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s;
+        }
+
+        .case-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+        }
+
+        .case-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        }
+
+        .case-tag {
+            display: inline-block;
+            padding: 5px 15px;
+            background: rgba(0, 150, 255, 0.3);
+            border-radius: 20px;
+            color: #00d4ff;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+
+        .case-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .case-location {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* 联系区域 */
+        .contact-section {
+            background: linear-gradient(135deg, #0d1b3e, #0a1628);
+            padding: 100px 0;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 60px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(0, 150, 255, 0.2), rgba(0, 212, 255, 0.1));
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        .contact-text h4 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .contact-text p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 14px 20px;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            border-color: #0096ff;
+            box-shadow: 0 0 20px rgba(0, 150, 255, 0.2);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            background: linear-gradient(135deg, #0096ff, #00d4ff);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 150, 255, 0.4);
+        }
+
+        /* 页脚 */
+        .footer {
+            padding: 60px 60px 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 60px;
+            max-width: 1400px;
+            margin: 0 auto 40px;
+        }
+
+        .footer-brand p {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.8;
+            margin-top: 15px;
+            font-size: 14px;
+        }
+
+        .footer-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+
+        .footer-links {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00d4ff;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.4);
+            font-size: 14px;
+        }
+
+        /* 返回顶部 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #0096ff, #00d4ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #fff;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 10px 30px rgba(0, 150, 255, 0.4);
+            z-index: 999;
+            text-decoration: none;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+        }
+
+        /* 响应式 */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+                text-align: center;
+            }
+
+            .hero-stats {
+                justify-content: center;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .advantages-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .cases-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                padding: 0 20px;
+            }
+
+            .section {
+                padding: 60px 20px;
+            }
+
+            .advantages-grid {
+                grid-template-columns: 1fr;
+                padding: 0 20px;
+            }
+
+            .cases-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                padding: 0 20px;
+            }
+
+            .footer {
+                padding: 40px 20px 20px;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+        }
+
+        /* 动画 */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="logo-container">
+            <div class="logo-icon">恒</div>
+            <div class="logo-text">
+                <div class="logo-name">上海恒翔电梯工程有限公司</div>
+                <div class="logo-slogan">安全可靠 · 服务至上</div>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="#home">首页</a></li>
+            <li><a href="#services">服务项目</a></li>
+            <li><a href="#advantages">我们的优势</a></li>
+            <li><a href="#cases">工程案例</a></li>
+            <li><a href="#contact">联系我们</a></li>
+        </ul>
+        <a href="tel:021-XXXXXXXX" class="nav-phone">📞 021-XXXXXXXX</a>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="hero-badge">🏢 上海专业电梯服务商</div>
+                <h1 class="hero-title">
+                    <span class="highlight">恒翔电梯</span><br>
+                    守护每一次<br>
+                    垂直出行
+                </h1>
+                <p class="hero-desc">
+                    上海恒翔电梯工程有限公司成立于XXXX年，是一家专业从事电梯安装、维修、保养的综合性企业。
+                    我们秉承"安全第一、质量至上"的服务理念，为客户提供全方位的电梯解决方案。
+                </p>
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn-primary">免费咨询 →</a>
+                    <a href="#services" class="btn-outline">了解服务</a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">15+</div>
+                        <div class="stat-label">年行业经验</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5000+</div>
+                        <div class="stat-label">服务客户</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">安全记录</div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="elevator-card">
+                    <div class="elevator-icon">🛗</div>
+                    <div class="elevator-info">
+                        <div class="elevator-title">专业电梯服务</div>
+                        <p style="color: rgba(255,255,255,0.6); margin-bottom: 20px;">覆盖上海全市，24小时响应</p>
+                        <div class="elevator-features">
+                            <div class="feature">
+                                <div class="feature-icon">⚡</div>
+                                <span>快速响应</span>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">🛡️</div>
+                                <span>安全保障</span>
+                            </div>
+                            <div class="feature">
+                                <div class="feature-icon">⭐</div>
+                                <span>品质服务</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 服务项目 -->
+    <section class="section" id="services">
+        <div class="section-header">
+            <div class="section-badge">我们的服务</div>
+            <h2 class="section-title">全方位电梯解决方案</h2>
+            <p class="section-desc">从安装到维保，为您提供一站式专业服务</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">🔧</div>
+                <h3 class="service-title">电梯安装</h3>
+                <p class="service-desc">专业的安装团队，严格按照国家标准施工，确保每一台电梯安全可靠运行。涵盖乘客电梯、载货电梯、自动扶梯等各类电梯安装。</p>
+                <a href="#contact" class="service-link">了解详情 →</a>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🔍</div>
+                <h3 class="service-title">电梯维修</h3>
+                <p class="service-desc">24小时应急维修服务，快速响应各类电梯故障。拥有丰富的维修经验和原厂配件，确保电梯恢复正常运行。</p>
+                <a href="#contact" class="service-link">了解详情 →</a>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">📋</div>
+                <h3 class="service-title">电梯保养</h3>
+                <p class="service-desc">定期保养计划，预防性维护，延长电梯使用寿命。专业的保养团队，规范的操作流程，让您的电梯始终保持最佳状态。</p>
+                <a href="#contact" class="service-link">了解详情 →</a>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🔄</div>
+                <h3 class="service-title">电梯改造</h3>
+                <p class="service-desc">老旧电梯升级改造，提升运行效率和安全性。节能改造、智能化升级，让您的电梯焕发新生。</p>
+                <a href="#contact" class="service-link">了解详情 →</a>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">📞</div>
+                <h3 class="service-title">技术咨询</h3>
+                <p class="service-desc">专业的技术咨询服务，为您提供电梯选型、采购、安装等全方位建议。免费上门勘察，量身定制解决方案。</p>
+                <a href="#contact" class="service-link">了解详情 →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 我们的优势 -->
+    <section class="advantages" id="advantages">
+        <div class="section-header" style="padding: 0 60px;">
+            <div class="section-badge">为什么选择我们</div>
+            <h2 class="section-title">恒翔电梯的核心优势</h2>
+            <p class="section-desc">15年专注电梯服务，值得信赖的合作伙伴</p>
+        </div>
+        <div class="advantages-grid">
+            <div class="advantage-item fade-in">
+                <div class="advantage-icon">🏆</div>
+                <h3 class="advantage-title">资质齐全</h3>
+                <p class="advantage-desc">拥有电梯安装、维修、保养全资质，通过ISO9001质量体系认证</p>
+            </div>
+            <div class="advantage-item fade-in">
+                <div class="advantage-icon">👨‍🔧</div>
+                <h3 class="advantage-title">专业团队</h3>
+                <p class="advantage-desc">50+名持证上岗技术人员，平均从业经验超过10年</p>
+            </div>
+            <div class="advantage-item fade-in">
+                <div class="advantage-icon">⏰</div>
+                <h3 class="advantage-title">快速响应</h3>
+                <p class="advantage-desc">24小时服务热线，市区30分钟内到达现场</p>
+            </div>
+            <div class="advantage-item fade-in">
+                <div class="advantage-icon">💰</div>
+                <h3 class="advantage-title">价格透明</h3>
+                <p class="advantage-desc">明码标价，无隐形消费，提供详细的费用清单</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 工程案例 -->
+    <section class="section" id="cases">
+        <div class="section-header">
+            <div class="section-badge">工程案例</div>
+            <h2 class="section-title">我们的服务足迹</h2>
+            <p class="section-desc">服务覆盖上海各区，累计完成5000+项目</p>
+        </div>
+        <div class="cases-grid">
+            <div class="case-card fade-in">
+                <div class="case-content">
+                    <div class="case-tag">商业综合体</div>
+                    <h3 class="case-title">XX购物中心电梯项目</h3>
+                    <p class="case-location">📍 上海市浦东新区</p>
+                </div>
+            </div>
+            <div class="case-card fade-in">
+                <div class="case-content">
+                    <div class="case-tag">住宅小区</div>
+                    <h3 class="case-title">XX花园电梯更新改造</h3>
+                    <p class="case-location">📍 上海市徐汇区</p>
+                </div>
+            </div>
+            <div class="case-card fade-in">
+                <div class="case-content">
+                    <div class="case-tag">办公楼宇</div>
+                    <h3 class="case-title">XX大厦电梯维保项目</h3>
+                    <p class="case-location">📍 上海市静安区</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="contact-section" id="contact">
+        <div class="section-header" style="padding: 0 60px;">
+            <div class="section-badge">联系我们</div>
+            <h2 class="section-title">获取免费咨询</h2>
+            <p class="section-desc">专业团队为您量身定制电梯解决方案</p>
+        </div>
+        <div class="contact-grid">
+            <div class="contact-info fade-in">
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div class="contact-text">
+                        <h4>服务热线</h4>
+                        <p>021-XXXXXXXX<br>7×24小时全天候服务</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📧</div>
+                    <div class="contact-text">
+                        <h4>电子邮箱</h4>
+                        <p>info@hengxiang-elevator.com<br>business@hengxiang-elevator.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div class="contact-text">
+                        <h4>公司地址</h4>
+                        <p>上海市XXXX区XXXX路XX号<br>欢迎莅临参观指导</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">🕐</div>
+                    <div class="contact-text">
+                        <h4>工作时间</h4>
+                        <p>周一至周六：08:00 - 18:00<br>紧急服务：24小时</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form fade-in">
+                <form onsubmit="event.preventDefault(); alert('感谢您的咨询，我们会尽快联系您！');">
+                    <div class="form-group">
+                        <label class="form-label">您的姓名 *</label>
+                        <input type="text" class="form-input" placeholder="请输入您的姓名" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">联系电话 *</label>
+                        <input type="tel" class="form-input" placeholder="请输入您的联系电话" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">服务需求</label>
+                        <select class="form-input">
+                            <option value="">请选择服务类型</option>
+                            <option value="install">电梯安装</option>
+                            <option value="repair">电梯维修</option>
+                            <option value="maintain">电梯保养</option>
+                            <option value="upgrade">电梯改造</option>
+                            <option value="inspect">安全检测</option>
+                            <option value="other">其他服务</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">详细描述</label>
+                        <textarea class="form-input form-textarea" placeholder="请描述您的需求..."></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">提交咨询</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo-container">
+                    <div class="logo-icon">恒</div>
+                    <div class="logo-text">
+                        <div class="logo-name">上海恒翔电梯工程有限公司</div>
+                    </div>
+                </div>
+                <p>专注电梯服务15年，致力于为客户提供安全、可靠、高效的电梯解决方案。您的满意是我们永恒的追求。</p>
+            </div>
+            <div>
+                <h4 class="footer-title">服务项目</h4>
+                <ul class="footer-links">
+                    <li><a href="#services">电梯安装</a></li>
+                    <li><a href="#services">电梯维修</a></li>
+                    <li><a href="#services">电梯保养</a></li>
+                    <li><a href="#services">电梯改造</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">快速链接</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#advantages">关于我们</a></li>
+                    <li><a href="#cases">工程案例</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="footer-title">联系方式</h4>
+                <ul class="footer-links">
+                    <li>📞 021-XXXXXXXX</li>
+                    <li>📧 info@hengxiang.com</li>
+                    <li>📍 上海市XXXX区</li>
+                    <li>🕐 周一至周六 8:00-18:00</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 上海恒翔电梯工程有限公司 版权所有 | <a href="#" style="color: #00d4ff;">沪ICP备XXXXXXXX号</a></p>
+        </div>
+    </footer>
+
+    <!-- 返回顶部 -->
+    <a href="#home" class="back-to-top" id="backToTop">↑</a>
+
+    <script>
+        // 导航栏滚动效果
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // 滚动动画
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // 数字动画
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const current = Math.floor(progress * (end - start) + start);
+                element.textContent = current.toLocaleString() + '+';
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // 页面加载完成
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>
