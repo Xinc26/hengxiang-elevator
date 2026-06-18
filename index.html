@@ -6,12 +6,13 @@
     <title>上海恒翔电梯工程有限公司 | 电梯安装维修保养</title>
     <meta name="description" content="上海恒翔电梯工程有限公司专业提供电梯安装、维修、保养服务。恒翔电梯，安全可靠，服务至上。电话：021-56309677">
     <meta name="keywords" content="恒翔电梯,上海恒翔电梯工程有限公司,电梯安装,电梯维修,电梯保养,上海电梯公司">
-    
-    <!-- 预加载 -->
+
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+SC:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    
+
+    <!-- 结构化数据 -->
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -21,13 +22,14 @@
         "address": {"@type": "PostalAddress", "streetAddress": "城桥镇官山路2号3幢C区2086室", "addressLocality": "上海市崇明县", "addressCountry": "CN"}
     }
     </script>
-</head>
-<body>
+
 <style>
+/* ============ CSS 变量 ============ */
 :root {
     --primary: #0ea5e9;
     --primary-dark: #0284c7;
     --accent: #06b6d4;
+    --cyan: #22d3ee;
     --gold: #f59e0b;
     --bg: #020617;
     --bg2: #0f172a;
@@ -47,44 +49,110 @@ body {
     color: var(--text);
     line-height: 1.7;
     overflow-x: hidden;
+    cursor: none;
 }
 
-/* ============ 通用动画 ============ */
-@keyframes fadeUp {
-    from { opacity: 0; transform: translateY(40px); }
-    to { opacity: 1; transform: translateY(0); }
+/* ============ 加载动画 ============ */
+.loader {
+    position: fixed; inset: 0; background: var(--bg);
+    z-index: 99999; display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
 }
-@keyframes fadeRight {
-    from { opacity: 0; transform: translateX(-60px); }
-    to { opacity: 1; transform: translateX(0); }
+.loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader-logo {
+    font-size: 56px; font-weight: 900;
+    background: linear-gradient(135deg, var(--primary), var(--accent), var(--cyan));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    margin-bottom: 32px; animation: loaderPulse 2s ease-in-out infinite;
 }
-@keyframes fadeLeft {
-    from { opacity: 0; transform: translateX(60px); }
-    to { opacity: 1; transform: translateX(0); }
+@keyframes loaderPulse {
+    0%,100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.7; transform: scale(0.97); }
 }
-@keyframes floatSlow {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-15px); }
+.loader-bar { width: 200px; height: 3px; background: rgba(255,255,255,0.06); border-radius: 3px; overflow: hidden; }
+.loader-progress { height: 100%; background: linear-gradient(90deg, var(--primary), var(--accent), var(--cyan)); border-radius: 3px; animation: loading 1.8s ease-in-out infinite; }
+@keyframes loading {
+    0% { width: 0; margin-left: 0; }
+    50% { width: 70%; margin-left: 15%; }
+    100% { width: 0; margin-left: 100%; }
 }
-@keyframes glow {
-    0%, 100% { opacity: 0.4; transform: scale(1); }
-    50% { opacity: 0.7; transform: scale(1.05); }
-}
-@keyframes shimmer {
-    0% { background-position: -200% center; }
-    100% { background-position: 200% center; }
-}
-@keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
 
-.reveal {
-    opacity: 0;
-    transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+/* ============ 滚动进度条 ============ */
+.scroll-progress {
+    position: fixed; top: 0; left: 0; height: 3px; z-index: 10000;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--cyan));
+    box-shadow: 0 0 20px rgba(14,165,233,0.5);
+    transition: width 0.1s ease;
 }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ============ 自定义光标 ============ */
+.cursor {
+    width: 40px; height: 40px;
+    border: 2px solid rgba(14,165,233,0.5);
+    border-radius: 50%; position: fixed;
+    pointer-events: none; z-index: 9999;
+    transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
+    mix-blend-mode: difference;
+}
+.cursor.hover {
+    width: 60px; height: 60px;
+    border-color: var(--cyan); background: rgba(14,165,233,0.1);
+}
+.cursor-dot {
+    width: 8px; height: 8px;
+    background: var(--primary); border-radius: 50%;
+    position: fixed; pointer-events: none; z-index: 9999;
+    box-shadow: 0 0 20px var(--primary), 0 0 40px rgba(14,165,233,0.3);
+}
+.cursor-trail {
+    position: fixed; pointer-events: none; z-index: 9998;
+    width: 6px; height: 6px;
+    background: rgba(14,165,233,0.4); border-radius: 50%;
+}
+
+/* ============ 粒子画布 ============ */
+#particles-canvas {
+    position: fixed; inset: 0; z-index: 0;
+}
+
+/* ============ 背景层 ============ */
+.glow-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+        radial-gradient(ellipse at 20% 50%, rgba(14,165,233,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(6,182,212,0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 50% 80%, rgba(14,165,233,0.06) 0%, transparent 50%);
+    animation: glowMove 20s ease-in-out infinite;
+}
+@keyframes glowMove { 0%,100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+.grid-bg {
+    position: fixed; inset: 0; z-index: 0;
+    background-image:
+        linear-gradient(rgba(14,165,233,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(14,165,233,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+}
+
+/* ============ 动画关键帧 ============ */
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeRight { from { opacity: 0; transform: translateX(-60px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes fadeLeft { from { opacity: 0; transform: translateX(60px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes floatSlow { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+@keyframes shimmer { 0% { background-position: -200% center; } 100% { background-position: 200% center; } }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .5; } }
+@keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
+@keyframes logoShine {
+    0% { transform: translateX(-100%) rotate(45deg); }
+    100% { transform: translateX(100%) rotate(45deg); }
+}
+
+.reveal { opacity: 0; transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0) !important; translateX(0) !important; }
 .reveal-up { transform: translateY(60px); }
 .reveal-left { transform: translateX(-60px); }
 .reveal-right { transform: translateX(60px); }
-.reveal-scale { transform: scale(0.9); }
 .delay-1 { transition-delay: 0.1s; }
 .delay-2 { transition-delay: 0.2s; }
 .delay-3 { transition-delay: 0.3s; }
@@ -99,8 +167,7 @@ body {
 }
 .navbar-inner {
     display: flex; justify-content: space-between; align-items: center;
-    padding: 16px 32px;
-    margin: 16px auto; max-width: 1280px;
+    padding: 16px 32px; margin: 16px auto; max-width: 1280px;
     background: rgba(15, 23, 42, 0.75);
     backdrop-filter: blur(24px) saturate(180%);
     border: 1px solid rgba(255,255,255,0.08);
@@ -109,16 +176,35 @@ body {
 }
 .navbar.scrolled .navbar-inner {
     margin-top: 0; border-radius: 0 0 32px 32px;
-    padding: 12px 32px;
-    background: rgba(15, 23, 42, 0.95);
+    padding: 12px 32px; background: rgba(15, 23, 42, 0.95);
+    box-shadow: 0 10px 60px rgba(0,0,0,0.3);
 }
 
-.logo-area { display: flex; align-items: center; gap: 14px; }
-.logo-img { width: 44px; height: 44px; border-radius: 12px; object-fit: contain; }
+.logo-area { display: flex; align-items: center; gap: 14px; text-decoration: none; }
+.logo-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary), var(--accent), var(--cyan));
+    background-size: 200% 200%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; font-weight: 900; color: #fff;
+    position: relative; overflow: hidden;
+    box-shadow: 0 0 20px rgba(14,165,233,0.4);
+    animation: logoGlow 3s ease infinite;
+}
+.logo-icon::before {
+    content: ''; position: absolute; inset: -50%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: logoShine 3s ease infinite;
+}
+@keyframes logoGlow {
+    0% { background-position: 0% 50%; box-shadow: 0 0 20px rgba(14,165,233,0.4); }
+    50% { background-position: 100% 50%; box-shadow: 0 0 35px rgba(14,165,233,0.7); }
+    100% { background-position: 0% 50%; box-shadow: 0 0 20px rgba(14,165,233,0.4); }
+}
 .logo-info { display: flex; flex-direction: column; }
 .logo-name {
     font-size: 18px; font-weight: 800; letter-spacing: -0.3px;
-    background: linear-gradient(135deg, #e2e8f0, #0ea5e9);
+    background: linear-gradient(135deg, #e2e8f0, var(--primary));
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
 }
 .logo-sub { font-size: 11px; color: #64748b; letter-spacing: 3px; text-transform: uppercase; }
@@ -127,39 +213,40 @@ body {
 .nav-links a {
     color: var(--text2); text-decoration: none; font-size: 14px;
     font-weight: 500; padding: 8px 18px; border-radius: 100px;
-    transition: all 0.3s;
+    transition: all 0.3s; position: relative;
 }
 .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.06); }
 
 .nav-cta {
-    padding: 10px 24px; background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    padding: 10px 24px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     border-radius: 100px; color: #fff; font-weight: 600; font-size: 14px;
     text-decoration: none; transition: all 0.3s; white-space: nowrap;
     box-shadow: 0 4px 20px rgba(14,165,233,0.3);
+    position: relative; overflow: hidden;
 }
+.nav-cta::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.5s;
+}
+.nav-cta:hover::before { left: 100%; }
 .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(14,165,233,0.5); }
 
 .nav-toggle { display: none; background: none; border: none; color: #fff; font-size: 24px; cursor: pointer; }
 
 /* ============ 英雄区 ============ */
 .hero {
-    min-height: 100vh; display: flex; align-items: center; position: relative;
-    overflow: hidden; padding-top: 100px;
+    min-height: 100vh; display: flex; align-items: center;
+    position: relative; overflow: hidden; padding-top: 100px;
 }
 .hero-bg {
     position: absolute; inset: 0; z-index: 0;
-    background: radial-gradient(ellipse 60% 60% at 50% 0%, rgba(14,165,233,0.12), transparent),
-                radial-gradient(ellipse 40% 50% at 80% 80%, rgba(6,182,212,0.08), transparent),
-                var(--bg);
-}
-.hero-bg-particles {
-    position: absolute; inset: 0; z-index: 0; opacity: 0.3;
-    background-image: 
-        radial-gradient(circle at 20% 30%, rgba(14,165,233,0.3) 0px, transparent 1px),
-        radial-gradient(circle at 70% 60%, rgba(6,182,212,0.3) 0px, transparent 1px),
-        radial-gradient(circle at 40% 80%, rgba(245,158,11,0.2) 0px, transparent 1px);
-    background-size: 80px 80px, 100px 100px, 120px 120px;
-    animation: glow 8s ease-in-out infinite;
+    background:
+        radial-gradient(ellipse 60% 60% at 50% 0%, rgba(14,165,233,0.12), transparent),
+        radial-gradient(ellipse 40% 50% at 80% 80%, rgba(6,182,212,0.08), transparent),
+        var(--bg);
 }
 .hero-grid {
     display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
@@ -175,8 +262,9 @@ body {
     border-radius: 100px; font-size: 13px; color: var(--primary);
     margin-bottom: 28px; font-weight: 500;
     animation: fadeRight 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    backdrop-filter: blur(10px);
 }
-.hero-tag .dot { width: 8px; height: 8px; background: #22d3ee; border-radius: 50%; animation: pulse 2s infinite; }
+.hero-tag .dot { width: 8px; height: 8px; background: var(--cyan); border-radius: 50%; animation: pulse 2s infinite; }
 
 .hero h1 {
     font-size: clamp(40px, 6vw, 72px); font-weight: 900; line-height: 1.1;
@@ -184,11 +272,22 @@ body {
     animation: fadeRight 0.8s 0.1s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 .hero h1 .gradient-text {
-    background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 30%, #22d3ee 60%, #0ea5e9 100%);
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 30%, var(--cyan) 60%, var(--primary) 100%);
     background-size: 200% auto;
     -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     animation: shimmer 3s linear infinite;
 }
+.hero h1 .line {
+    display: block; overflow: hidden;
+}
+.hero h1 .line span {
+    display: inline-block;
+    animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0; transform: translateY(100%);
+}
+.hero h1 .line:nth-child(1) span { animation-delay: 0.3s; }
+.hero h1 .line:nth-child(2) span { animation-delay: 0.5s; }
+.hero h1 .line:nth-child(3) span { animation-delay: 0.7s; }
 
 .hero-desc {
     font-size: 17px; color: var(--text2); line-height: 1.8;
@@ -196,14 +295,26 @@ body {
     animation: fadeRight 0.8s 0.2s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; animation: fadeRight 0.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.hero-actions {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    animation: fadeRight 0.8s 0.3s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .btn {
     padding: 16px 36px; font-size: 15px; font-weight: 600; text-decoration: none;
     border-radius: 12px; display: inline-flex; align-items: center; gap: 10px;
     transition: all 0.3s; cursor: pointer; border: none; letter-spacing: 0.2px;
+    position: relative; overflow: hidden;
 }
+.btn::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transition: left 0.6s;
+}
+.btn:hover::before { left: 100%; }
 .btn-primary {
-    background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     color: #fff; box-shadow: 0 8px 32px rgba(14,165,233,0.3);
 }
 .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 16px 48px rgba(14,165,233,0.45); }
@@ -218,36 +329,58 @@ body {
     border-top: 1px solid rgba(255,255,255,0.06);
     animation: fadeRight 0.8s 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
-.stat-num { font-size: 40px; font-weight: 900; color: #0ea5e9; line-height: 1; }
+.stat-num { font-size: 40px; font-weight: 900; color: var(--primary); line-height: 1; }
 .stat-label { font-size: 13px; color: #64748b; margin-top: 6px; letter-spacing: 1px; }
 
+/* 3D 卡片 */
 .hero-visual {
-    position: relative; aspect-ratio: 1;
+    position: relative; perspective: 1000px;
     animation: fadeLeft 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .hero-card {
-    position: absolute; inset: 0;
     background: linear-gradient(145deg, rgba(30,41,59,0.8), rgba(15,23,42,0.6));
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 32px; overflow: hidden;
-    backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center;
+    backdrop-filter: blur(20px);
+    display: flex; align-items: center; justify-content: center;
+    padding: 60px;
+    transform-style: preserve-3d;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
 }
 .hero-card::before {
     content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, transparent, #0ea5e9, #06b6d4, transparent);
+    background: linear-gradient(90deg, transparent, var(--primary), var(--accent), transparent);
 }
-.hero-card .icon-area { text-align: center; }
-.hero-card .elevator-emoji { font-size: 120px; animation: floatSlow 6s ease-in-out infinite; display: block; }
+.hero-card::after {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, rgba(14,165,233,0.08) 0%, transparent 50%);
+    transform: translate(var(--mouse-x, 50%), var(--mouse-y, 50%));
+    transition: transform 0.3s ease;
+}
+.hero-card:hover {
+    transform: rotateY(5deg) rotateX(5deg) translateZ(20px);
+    box-shadow: 0 30px 80px rgba(14,165,233,0.2);
+}
+
+.hero-card .icon-area { text-align: center; transform: translateZ(30px); position: relative; z-index: 1; }
+.hero-card .elevator-emoji {
+    font-size: 120px; animation: floatSlow 6s ease-in-out infinite; display: block;
+    filter: drop-shadow(0 20px 40px rgba(14,165,233,0.3));
+}
 .hero-card .tagline { font-size: 16px; color: var(--text2); margin-top: 16px; font-weight: 500; }
-.hero-card .brand-badge {
-    display: inline-flex; gap: 6px; margin-top: 24px;
-}
+.hero-card .brand-badge { display: inline-flex; gap: 8px; margin-top: 24px; flex-wrap: wrap; justify-content: center; }
 .hero-card .brand-badge span {
     padding: 6px 16px; background: rgba(14,165,233,0.1);
     border: 1px solid rgba(14,165,233,0.2);
-    border-radius: 100px; font-size: 12px; color: #0ea5e9;
+    border-radius: 100px; font-size: 12px; color: var(--primary);
+    transition: all 0.3s;
+}
+.hero-card .brand-badge span:hover {
+    background: rgba(14,165,233,0.2); transform: translateY(-2px);
 }
 
+/* 浮动装饰 */
 .hero-floating {
     position: absolute; width: 80px; height: 80px;
     background: rgba(14,165,233,0.1); border: 1px solid rgba(14,165,233,0.15);
@@ -259,7 +392,7 @@ body {
 .hero-floating.f3 { top: 45%; right: -15%; animation: floatSlow 6s ease-in-out 2s infinite; width: 60px; height: 60px; font-size: 24px; }
 
 /* ============ 板块通用 ============ */
-.section { padding: 120px 0; position: relative; }
+.section { padding: 120px 0; position: relative; z-index: 1; }
 .section-label {
     display: inline-block; padding: 6px 20px;
     background: rgba(14,165,233,0.08); border: 1px solid rgba(14,165,233,0.15);
@@ -281,54 +414,98 @@ body {
 .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
 
 .service-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 48px 36px; position: relative; overflow: hidden;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 48px 36px;
+    position: relative; overflow: hidden;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     cursor: pointer;
 }
+.service-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--cyan));
+    transform: scaleX(0); transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    transform-origin: left;
+}
 .service-card::after {
     content: ''; position: absolute; inset: 0;
-    background: radial-gradient(circle at 100% 0%, rgba(14,165,233,0.08), transparent 60%);
+    background: radial-gradient(circle at var(--mx, 50%) var(--my, 50%), rgba(14,165,233,0.12) 0%, transparent 50%);
     opacity: 0; transition: opacity 0.4s;
 }
-.service-card:hover { transform: translateY(-8px); border-color: rgba(14,165,233,0.3); box-shadow: var(--shadow); }
+.service-card:hover { transform: translateY(-10px); border-color: rgba(14,165,233,0.3); box-shadow: var(--shadow); }
+.service-card:hover::before { transform: scaleX(1); }
 .service-card:hover::after { opacity: 1; }
 .service-card:hover .service-arrow { transform: translateX(4px); }
+.service-card:hover .service-icon { transform: scale(1.1) rotate(5deg); }
 
 .service-icon {
     width: 60px; height: 60px; display: flex; align-items: center; justify-content: center;
-    font-size: 28px; margin-bottom: 28px;
-    border-radius: 16px;
+    font-size: 28px; margin-bottom: 28px; border-radius: 16px;
     background: linear-gradient(135deg, rgba(14,165,233,0.15), rgba(6,182,212,0.05));
+    transition: all 0.3s; position: relative; z-index: 1;
 }
-.service-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #f1f5f9; }
-.service-card p { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 24px; }
-.service-arrow { color: var(--primary); font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; transition: transform 0.3s; }
+.service-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 12px; color: #f1f5f9; position: relative; z-index: 1; }
+.service-card p { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 24px; position: relative; z-index: 1; }
+.service-arrow { color: var(--primary); font-weight: 600; font-size: 14px; display: inline-flex; align-items: center; gap: 6px; transition: transform 0.3s; position: relative; z-index: 1; }
+
+/* ============ 品牌区 ============ */
+.brands-section { background: linear-gradient(180deg, transparent, rgba(14,165,233,0.03), transparent); padding: 100px 0; position: relative; z-index: 1; }
+.brands-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 24px; }
+.brand-card {
+    display: flex; flex-direction: column; align-items: center; gap: 14px;
+    padding: 28px 32px; background: rgba(30,41,59,0.3);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    min-width: 150px; transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative; overflow: hidden;
+}
+.brand-card::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(14,165,233,0.08), transparent);
+    opacity: 0; transition: opacity 0.3s;
+}
+.brand-card:hover { transform: translateY(-8px); border-color: rgba(14,165,233,0.3); box-shadow: 0 20px 60px rgba(14,165,233,0.12); }
+.brand-card:hover::before { opacity: 1; }
+.brand-logo { width: 80px; height: 50px; display: flex; align-items: center; justify-content: center; position: relative; z-index: 1; }
+.brand-logo svg { width: 100%; height: 100%; filter: brightness(0.8) grayscale(0.3); transition: all 0.3s; }
+.brand-card:hover .brand-logo svg { filter: brightness(1.1) grayscale(0); transform: scale(1.1); }
+.brand-name { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.9); position: relative; z-index: 1; }
+.brand-desc { font-size: 12px; color: rgba(255,255,255,0.4); position: relative; z-index: 1; }
 
 /* ============ 优势区 ============ */
 .advantages {
-    position: relative;
+    position: relative; z-index: 1;
     background: linear-gradient(180deg, transparent, rgba(14,165,233,0.03) 40%, rgba(14,165,233,0.03) 60%, transparent);
 }
 .advantages-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 
 .adv-card {
-    text-align: center; padding: 40px 28px;
+    text-align: center; padding: 44px 28px;
     background: rgba(30,41,59,0.3);
     border: 1px solid rgba(255,255,255,0.04);
-    border-radius: var(--radius); transition: all 0.3s;
+    border-radius: var(--radius); transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative; overflow: hidden;
 }
-.adv-card:hover { border-color: rgba(14,165,233,0.2); background: rgba(30,41,59,0.5); transform: translateY(-4px); }
-.adv-icon { font-size: 40px; margin-bottom: 20px; display: block; }
-.adv-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #f1f5f9; }
-.adv-card p { font-size: 13px; color: var(--text2); line-height: 1.7; }
+.adv-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--cyan));
+    transform: scaleX(0); transition: transform 0.5s;
+}
+.adv-card::after {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(14,165,233,0.1) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+}
+.adv-card:hover { border-color: rgba(14,165,233,0.2); background: rgba(30,41,59,0.5); transform: translateY(-8px); box-shadow: 0 20px 60px rgba(14,165,233,0.1); }
+.adv-card:hover::before { transform: scaleX(1); }
+.adv-card:hover::after { opacity: 1; }
+.adv-card:hover .adv-icon { transform: scale(1.15) rotate(10deg); }
+.adv-icon { font-size: 40px; margin-bottom: 20px; display: block; transition: transform 0.3s; position: relative; z-index: 1; }
+.adv-card h4 { font-size: 18px; font-weight: 700; margin-bottom: 8px; color: #f1f5f9; position: relative; z-index: 1; }
+.adv-card p { font-size: 13px; color: var(--text2); line-height: 1.7; position: relative; z-index: 1; }
 
 /* ============ 资质区 ============ */
 .credentials { background: var(--bg2); }
 .cred-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-.cred-image { 
+.cred-image {
     width: 100%; max-width: 400px; border-radius: var(--radius);
     border: 1px solid rgba(255,255,255,0.08); box-shadow: var(--shadow);
 }
@@ -339,7 +516,7 @@ body {
     border-radius: 12px; border: 1px solid var(--border);
     transition: all 0.3s;
 }
-.cred-item:hover { border-color: rgba(14,165,233,0.2); }
+.cred-item:hover { border-color: rgba(14,165,233,0.2); transform: translateX(6px); }
 .cred-dot { width: 12px; height: 12px; background: var(--primary); border-radius: 50%; margin-top: 6px; flex-shrink: 0; box-shadow: 0 0 12px rgba(14,165,233,0.5); }
 .cred-item h4 { font-size: 17px; font-weight: 700; margin-bottom: 4px; color: #f1f5f9; }
 .cred-item p { font-size: 14px; color: var(--text2); line-height: 1.6; }
@@ -351,11 +528,13 @@ body {
     aspect-ratio: 4/3; background: linear-gradient(145deg, #1e293b, #0f172a);
     border: 1px solid var(--border); cursor: pointer; transition: all 0.4s;
 }
-.case-card:hover { transform: scale(1.03); box-shadow: var(--shadow); }
-.case-card .case-bg {
-    position: absolute; inset: 0;
+.case-card::before {
+    content: ''; position: absolute; inset: 0;
     background: radial-gradient(circle at 50% 0%, rgba(14,165,233,0.15), transparent);
+    opacity: 0; transition: opacity 0.3s;
 }
+.case-card:hover { transform: scale(1.03); box-shadow: 0 30px 80px rgba(14,165,233,0.2); border-color: rgba(14,165,233,0.3); }
+.case-card:hover::before { opacity: 1; }
 .case-content {
     position: absolute; bottom: 0; left: 0; right: 0;
     padding: 32px; background: linear-gradient(transparent, rgba(2,6,23,0.95) 60%);
@@ -363,19 +542,56 @@ body {
 .case-tag { display: inline-block; padding: 4px 14px; background: rgba(14,165,233,0.2); border-radius: 100px; font-size: 12px; color: var(--primary); margin-bottom: 10px; }
 .case-title { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
 .case-sub { font-size: 13px; color: var(--text2); }
+.case-btn {
+    position: absolute; bottom: 32px; right: 32px;
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 18px;
+    opacity: 0; transform: translateY(16px);
+    transition: all 0.3s;
+}
+.case-card:hover .case-btn { opacity: 1; transform: translateY(0); }
 
-/* ============ 联系我们 ============ */
+/* ============ FAQ ============ */
+.faq-section { padding: 120px 0; max-width: 860px; margin: 0 auto; position: relative; z-index: 1; }
+.faq-item {
+    background: rgba(30,41,59,0.3); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 16px; overflow: hidden;
+    transition: all 0.3s;
+}
+.faq-item:hover { border-color: rgba(14,165,233,0.2); }
+.faq-item.active { border-color: rgba(14,165,233,0.3); background: rgba(30,41,59,0.5); }
+.faq-question {
+    padding: 24px 28px; display: flex; justify-content: space-between; align-items: center;
+    cursor: pointer; font-size: 17px; font-weight: 600; color: #f1f5f9;
+    transition: color 0.3s;
+}
+.faq-question:hover { color: var(--primary); }
+.faq-toggle {
+    width: 32px; height: 32px;
+    background: rgba(14,165,233,0.15); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.4s; flex-shrink: 0; font-size: 18px;
+}
+.faq-item.active .faq-toggle { transform: rotate(45deg); background: linear-gradient(135deg, var(--primary), var(--accent)); }
+.faq-answer {
+    padding: 0 28px 24px; font-size: 15px; color: var(--text2);
+    line-height: 1.8; display: none; animation: fadeUp 0.3s ease;
+}
+.faq-item.active .faq-answer { display: block; }
+
+/* ============ 联系区 ============ */
 .contact { background: linear-gradient(180deg, var(--bg2), var(--bg)); }
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
 .contact-cards { display: flex; flex-direction: column; gap: 20px; }
 .contact-card {
     display: flex; gap: 18px; align-items: flex-start;
-    padding: 28px;
-    background: rgba(30,41,59,0.5);
-    border: 1px solid var(--border);
-    border-radius: 16px; transition: all 0.3s;
+    padding: 28px; background: rgba(30,41,59,0.5);
+    border: 1px solid var(--border); border-radius: 16px;
+    transition: all 0.3s;
 }
-.contact-card:hover { border-color: rgba(14,165,233,0.2); }
+.contact-card:hover { border-color: rgba(14,165,233,0.2); transform: translateX(8px); }
 .contact-card-icon {
     width: 52px; height: 52px; flex-shrink: 0;
     border-radius: 14px; display: flex; align-items: center; justify-content: center;
@@ -386,10 +602,8 @@ body {
 .contact-card p { font-size: 14px; color: var(--text2); line-height: 1.7; }
 
 .contact-form-wrap {
-    background: rgba(30,41,59,0.4);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 40px;
+    background: rgba(30,41,59,0.4); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 40px;
 }
 .form-title { font-size: 24px; font-weight: 700; margin-bottom: 8px; color: #f1f5f9; }
 .form-sub { font-size: 14px; color: var(--text2); margin-bottom: 32px; }
@@ -403,33 +617,43 @@ body {
 }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
     border-color: var(--primary); box-shadow: 0 0 0 3px rgba(14,165,233,0.1);
+    background: rgba(14,165,233,0.03);
 }
 .form-group textarea { min-height: 120px; resize: vertical; }
 .submit-btn {
     width: 100%; padding: 16px; font-size: 16px; font-weight: 700; color: #fff;
-    background: linear-gradient(135deg, #0ea5e9, #06b6d4);
+    background: linear-gradient(135deg, var(--primary), var(--accent));
     border: none; border-radius: 12px; cursor: pointer;
     transition: all 0.3s; letter-spacing: 0.5px;
     box-shadow: 0 8px 32px rgba(14,165,233,0.25);
+    position: relative; overflow: hidden;
 }
+.submit-btn::before {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    transition: left 0.6s;
+}
+.submit-btn:hover::before { left: 100%; }
 .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 16px 48px rgba(14,165,233,0.4); }
 
 /* ============ 页脚 ============ */
 .footer {
     background: var(--bg); padding: 80px 0 32px;
     border-top: 1px solid rgba(255,255,255,0.04);
+    position: relative; z-index: 1;
 }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
 .footer-brand .logo-area { margin-bottom: 20px; }
 .footer-brand p { font-size: 14px; color: var(--text2); line-height: 1.8; margin-bottom: 16px; }
-.footer-license { 
+.footer-license {
     width: 100%; max-width: 240px; border-radius: 10px;
     border: 1px solid rgba(255,255,255,0.06); margin-top: 8px;
 }
 .footer h5 { font-size: 14px; font-weight: 700; color: #f1f5f9; margin-bottom: 20px; letter-spacing: 1px; }
 .footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-.footer-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: color 0.3s; }
-.footer-links a:hover { color: var(--primary); }
+.footer-links a { color: var(--text2); text-decoration: none; font-size: 14px; transition: all 0.3s; }
+.footer-links a:hover { color: var(--primary); padding-left: 4px; }
 .footer-links li { font-size: 14px; color: var(--text2); }
 .footer-bottom {
     text-align: center; padding-top: 40px; margin-top: 40px;
@@ -438,13 +662,25 @@ body {
 }
 .footer-bottom a { color: var(--primary); text-decoration: none; }
 
+/* ============ 返回顶部 ============ */
+.back-to-top {
+    position: fixed; bottom: 32px; right: 32px;
+    width: 48px; height: 48px;
+    background: linear-gradient(135deg, var(--primary), var(--accent));
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 20px; text-decoration: none;
+    opacity: 0; visibility: hidden; transition: all 0.4s; z-index: 999;
+    box-shadow: 0 8px 24px rgba(14,165,233,0.4);
+}
+.back-to-top.visible { opacity: 1; visibility: visible; }
+.back-to-top:hover { transform: translateY(-6px) rotate(360deg); box-shadow: 0 12px 36px rgba(14,165,233,0.6); }
+
 /* ============ 响应式 ============ */
 @media (max-width: 1024px) {
     .hero-grid { grid-template-columns: 1fr; gap: 48px; text-align: center; }
     .hero-desc { max-width: 100%; }
     .hero-stats { justify-content: center; }
     .hero-actions { justify-content: center; }
-    .hero-visual { aspect-ratio: 16/9; }
     .services-grid { grid-template-columns: repeat(2, 1fr); }
     .advantages-grid { grid-template-columns: repeat(2, 1fr); }
     .cases-grid { grid-template-columns: repeat(2, 1fr); }
@@ -453,6 +689,8 @@ body {
     .footer-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
+    body { cursor: auto; }
+    .cursor, .cursor-dot, .cursor-trail { display: none; }
     .nav-links { display: none; }
     .nav-toggle { display: block; }
     .navbar-inner { margin: 8px 12px; padding: 12px 20px; }
@@ -461,6 +699,8 @@ body {
     .section { padding: 72px 0; }
     .form-row { grid-template-columns: 1fr; }
     .hero-floating { display: none; }
+    .brands-grid { gap: 16px; }
+    .faq-section { padding: 72px 24px; }
 }
 @media (max-width: 480px) {
     .footer-grid { grid-template-columns: 1fr; }
@@ -468,26 +708,48 @@ body {
     .stat-num { font-size: 28px; }
 }
 </style>
+</head>
+<body>
+    <!-- 加载动画 -->
+    <div class="loader" id="loader">
+        <div class="loader-logo">恒翔电梯</div>
+        <div class="loader-bar"><div class="loader-progress"></div></div>
+    </div>
+
+    <!-- 滚动进度条 -->
+    <div class="scroll-progress" id="scrollProgress"></div>
+
+    <!-- 自定义光标 -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-dot" id="cursorDot"></div>
+    <div id="cursorTrails"></div>
+
+    <!-- 粒子画布 -->
+    <canvas id="particles-canvas"></canvas>
+    <div class="glow-bg"></div>
+    <div class="grid-bg"></div>
 
     <!-- ============ 导航栏 ============ -->
-    <nav class="navbar" id="navbar">
+    <nav class="navbar scrolled" id="navbar">
         <div class="navbar-inner">
-            <div class="logo-area">
-                <img class="logo-img" src="logo.png" alt="恒翔电梯">
+            <a href="#" class="logo-area">
+                <div class="logo-icon">恒</div>
                 <div class="logo-info">
                     <span class="logo-name">恒翔电梯</span>
                     <span class="logo-sub">HengXiang Elevator</span>
                 </div>
-            </div>
+            </a>
             <ul class="nav-links">
                 <li><a href="#home">首页</a></li>
                 <li><a href="#services">服务</a></li>
+                <li><a href="#brands">品牌</a></li>
                 <li><a href="#advantages">优势</a></li>
                 <li><a href="#credentials">资质</a></li>
                 <li><a href="#cases">案例</a></li>
+                <li><a href="#faq">FAQ</a></li>
                 <li><a href="#contact">联系</a></li>
             </ul>
-            <a href="tel:021-56309677" class="nav-cta">📞 021-56309677</a>
+            <a href="tel:021-56309677" class="nav-cta magnetic">📞 021-56309677</a>
             <button class="nav-toggle" id="navToggle">☰</button>
         </div>
     </nav>
@@ -495,27 +757,38 @@ body {
     <!-- ============ 英雄区 ============ -->
     <section class="hero" id="home">
         <div class="hero-bg"></div>
-        <div class="hero-bg-particles"></div>
         <div class="hero-grid">
             <div class="hero-text">
                 <div class="hero-tag"><span class="dot"></span> 上海专业电梯服务商</div>
-                <h1>守护每一次<br><span class="gradient-text">垂直出行</span></h1>
+                <h1>
+                    <div class="line"><span>守护每一次</span></div>
+                    <div class="line"><span class="gradient-text">垂直出行</span></div>
+                </h1>
                 <p class="hero-desc">
                     上海恒翔电梯工程有限公司是一家专业从事电梯安装、维修、保养的综合性企业。<br>
                     秉承「安全第一、质量至上」的服务理念，为客户提供全方位的电梯解决方案。
                 </p>
                 <div class="hero-actions">
-                    <a href="#contact" class="btn btn-primary">获取免费咨询 ↗</a>
-                    <a href="#services" class="btn btn-outline">了解服务 ↓</a>
+                    <a href="#contact" class="btn btn-primary magnetic">获取免费咨询 ↗</a>
+                    <a href="#services" class="btn btn-outline magnetic">了解服务 ↓</a>
                 </div>
                 <div class="hero-stats">
-                    <div><div class="stat-num">15<small style="font-size:24px">+</small></div><div class="stat-label">年行业经验</div></div>
-                    <div><div class="stat-num">5000<small style="font-size:24px">+</small></div><div class="stat-label">服务客户</div></div>
-                    <div><div class="stat-num">24<small style="font-size:24px">H</small></div><div class="stat-label">全天候响应</div></div>
+                    <div>
+                        <div class="stat-num count-up" data-target="15">0<small style="font-size:24px">+</small></div>
+                        <div class="stat-label">年行业经验</div>
+                    </div>
+                    <div>
+                        <div class="stat-num count-up" data-target="5000">0<small style="font-size:24px">+</small></div>
+                        <div class="stat-label">服务客户</div>
+                    </div>
+                    <div>
+                        <div class="stat-num count-up" data-target="24">0<small style="font-size:24px">H</small></div>
+                        <div class="stat-label">全天候响应</div>
+                    </div>
                 </div>
             </div>
             <div class="hero-visual">
-                <div class="hero-card">
+                <div class="hero-card" id="heroCard">
                     <div class="icon-area">
                         <span class="elevator-emoji">🛗</span>
                         <p class="tagline">安全 · 可靠 · 高效</p>
@@ -582,6 +855,49 @@ body {
         </div>
     </section>
 
+    <!-- ============ 品牌 ============ -->
+    <section class="brands-section" id="brands">
+        <div class="container">
+            <div class="section-header">
+                <div class="section-label reveal reveal-up">Our Brands</div>
+                <h2 class="section-title reveal reveal-up delay-1">覆盖主流电梯品牌</h2>
+                <p class="section-subtitle reveal reveal-up delay-2" style="margin:0 auto">专业服务，覆盖国内外知名电梯品牌</p>
+            </div>
+            <div class="brands-grid">
+                <div class="brand-card reveal reveal-up">
+                    <div class="brand-logo"><svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="76" height="40" rx="6" stroke="#e2e8f0" stroke-width="1.5" fill="none"/><path d="M20 15h40M20 25h40M20 35h40" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"/><circle cx="40" cy="25" r="8" stroke="#0ea5e9" stroke-width="1.5" fill="rgba(14,165,233,0.1)"/><text x="40" y="28" text-anchor="middle" fill="#0ea5e9" font-size="8" font-weight="bold">M</text></svg></div>
+                    <div class="brand-name">三菱电梯</div>
+                    <div class="brand-desc">日系品质，稳定可靠</div>
+                </div>
+                <div class="brand-card reveal reveal-up delay-1">
+                    <div class="brand-logo"><svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="76" height="40" rx="6" stroke="#e2e8f0" stroke-width="1.5" fill="none"/><path d="M25 15v20M55 15v20M25 25h30" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round"/><circle cx="40" cy="25" r="6" stroke="#0ea5e9" stroke-width="1.5" fill="rgba(14,165,233,0.15)"/><text x="40" y="28" text-anchor="middle" fill="#0ea5e9" font-size="7" font-weight="bold">OTIS</text></svg></div>
+                    <div class="brand-name">奥的斯电梯</div>
+                    <div class="brand-desc">百年品牌，全球领先</div>
+                </div>
+                <div class="brand-card reveal reveal-up delay-2">
+                    <div class="brand-logo"><svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="76" height="40" rx="6" stroke="#e2e8f0" stroke-width="1.5" fill="none"/><path d="M20 35L40 15L60 35" stroke="#0ea5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M30 35L40 22L50 35" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><text x="40" y="44" text-anchor="middle" fill="#0ea5e9" font-size="6" font-weight="bold">KONE</text></svg></div>
+                    <div class="brand-name">通力电梯</div>
+                    <div class="brand-desc">芬兰技术，节能环保</div>
+                </div>
+                <div class="brand-card reveal reveal-up delay-3">
+                    <div class="brand-logo"><svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="76" height="40" rx="6" stroke="#e2e8f0" stroke-width="1.5" fill="none"/><path d="M20 15h15v20H20zM45 15h15v20H45z" stroke="#0ea5e9" stroke-width="1.5" fill="rgba(14,165,233,0.08)"/><path d="M35 20v10M45 20v10" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"/><text x="40" y="44" text-anchor="middle" fill="#0ea5e9" font-size="5" font-weight="bold">thyssenkrupp</text></svg></div>
+                    <div class="brand-name">蒂森克虏伯</div>
+                    <div class="brand-desc">德国工艺，高端品质</div>
+                </div>
+                <div class="brand-card reveal reveal-up delay-4">
+                    <div class="brand-logo"><svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="76" height="40" rx="6" stroke="#e2e8f0" stroke-width="1.5" fill="none"/><circle cx="40" cy="22" r="10" stroke="#0ea5e9" stroke-width="1.5" fill="rgba(14,165,233,0.1)"/><path d="M34 22h12M40 16v12" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"/><text x="40" y="44" text-anchor="middle" fill="#0ea5e9" font-size="7" font-weight="bold">HITACHI</text></svg></div>
+                    <div class="brand-name">日立电梯</div>
+                    <div class="brand-desc">日本技术，安全高效</div>
+                </div>
+                <div class="brand-card reveal reveal-up">
+                    <div class="brand-logo"><svg viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="5" width="76" height="40" rx="6" stroke="#e2e8f0" stroke-width="1.5" fill="none"/><path d="M25 15v20M55 15v20" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round"/><path d="M25 25c10-10 20 10 30 0" stroke="#06b6d4" stroke-width="2" stroke-linecap="round" fill="none"/><text x="40" y="44" text-anchor="middle" fill="#0ea5e9" font-size="6" font-weight="bold">YUNGTAY</text></svg></div>
+                    <div class="brand-name">永大电梯</div>
+                    <div class="brand-desc">台湾品牌，性价比高</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ============ 优势 ============ -->
     <section class="section advantages" id="advantages">
         <div class="container">
@@ -591,26 +907,10 @@ body {
                 <p class="section-subtitle reveal reveal-up delay-2" style="margin:0 auto">15年专注电梯服务，值得信赖的合作伙伴</p>
             </div>
             <div class="advantages-grid">
-                <div class="adv-card reveal reveal-up">
-                    <span class="adv-icon">🏆</span>
-                    <h4>资质齐全</h4>
-                    <p>拥有电梯安装、维修、保养全资质，通过 ISO9001 认证</p>
-                </div>
-                <div class="adv-card reveal reveal-up delay-1">
-                    <span class="adv-icon">👨‍🔧</span>
-                    <h4>专业团队</h4>
-                    <p>50+ 持证技术人员，平均从业经验超过 10 年</p>
-                </div>
-                <div class="adv-card reveal reveal-up delay-2">
-                    <span class="adv-icon">⏰</span>
-                    <h4>快速响应</h4>
-                    <p>24 小时热线，市区 30 分钟到达，全年无休</p>
-                </div>
-                <div class="adv-card reveal reveal-up delay-3">
-                    <span class="adv-icon">💰</span>
-                    <h4>价格透明</h4>
-                    <p>明码标价，零隐形消费，提供详细费用清单</p>
-                </div>
+                <div class="adv-card reveal reveal-up"><span class="adv-icon">🏆</span><h4>资质齐全</h4><p>拥有电梯安装、维修、保养全资质，通过 ISO9001 认证</p></div>
+                <div class="adv-card reveal reveal-up delay-1"><span class="adv-icon">👨‍🔧</span><h4>专业团队</h4><p>50+ 持证技术人员，平均从业经验超过 10 年</p></div>
+                <div class="adv-card reveal reveal-up delay-2"><span class="adv-icon">⏰</span><h4>快速响应</h4><p>24 小时热线，市区 30 分钟到达，全年无休</p></div>
+                <div class="adv-card reveal reveal-up delay-3"><span class="adv-icon">💰</span><h4>价格透明</h4><p>明码标价，零隐形消费，提供详细费用清单</p></div>
             </div>
         </div>
     </section>
@@ -623,34 +923,10 @@ body {
                 <div class="cred-list reveal reveal-right">
                     <div class="section-label">Credentials</div>
                     <h2 class="section-title" style="font-size:32px">正规资质 · 值得信赖</h2>
-                    <div class="cred-item">
-                        <div class="cred-dot"></div>
-                        <div>
-                            <h4>营业执照齐全</h4>
-                            <p>上海恒翔电梯工程有限公司，工商注册正规企业</p>
-                        </div>
-                    </div>
-                    <div class="cred-item">
-                        <div class="cred-dot"></div>
-                        <div>
-                            <h4>专业资质认证</h4>
-                            <p>具备电梯安装、维修、改造全套行业资质证书</p>
-                        </div>
-                    </div>
-                    <div class="cred-item">
-                        <div class="cred-dot"></div>
-                        <div>
-                            <h4>ISO9001 质量管理</h4>
-                            <p>通过国际质量管理体系认证，标准化作业流程</p>
-                        </div>
-                    </div>
-                    <div class="cred-item">
-                        <div class="cred-dot"></div>
-                        <div>
-                            <h4>保险承保</h4>
-                            <p>全额工程责任险，为客户提供全方位安全保障</p>
-                        </div>
-                    </div>
+                    <div class="cred-item"><div class="cred-dot"></div><div><h4>营业执照齐全</h4><p>上海恒翔电梯工程有限公司，工商注册正规企业</p></div></div>
+                    <div class="cred-item"><div class="cred-dot"></div><div><h4>专业资质认证</h4><p>具备电梯安装、维修、改造全套行业资质证书</p></div></div>
+                    <div class="cred-item"><div class="cred-dot"></div><div><h4>ISO9001 质量管理</h4><p>通过国际质量管理体系认证，标准化作业流程</p></div></div>
+                    <div class="cred-item"><div class="cred-dot"></div><div><h4>保险承保</h4><p>全额工程责任险，为客户提供全方位安全保障</p></div></div>
                 </div>
             </div>
         </div>
@@ -666,31 +942,45 @@ body {
             </div>
             <div class="cases-grid">
                 <div class="case-card reveal reveal-up">
-                    <div class="case-bg"></div>
                     <div class="case-content">
                         <div class="case-tag">商业综合体</div>
                         <h3 class="case-title">XX 购物中心电梯项目</h3>
                         <p class="case-sub">📍 上海市浦东新区</p>
                     </div>
+                    <div class="case-btn">→</div>
                 </div>
                 <div class="case-card reveal reveal-up delay-1">
-                    <div class="case-bg"></div>
                     <div class="case-content">
                         <div class="case-tag">住宅小区</div>
                         <h3 class="case-title">XX 花园电梯更新改造</h3>
                         <p class="case-sub">📍 上海市徐汇区</p>
                     </div>
+                    <div class="case-btn">→</div>
                 </div>
                 <div class="case-card reveal reveal-up delay-2">
-                    <div class="case-bg"></div>
                     <div class="case-content">
                         <div class="case-tag">办公楼宇</div>
                         <h3 class="case-title">XX 大厦电梯维保项目</h3>
                         <p class="case-sub">📍 上海市静安区</p>
                     </div>
+                    <div class="case-btn">→</div>
                 </div>
             </div>
         </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="faq-section" id="faq">
+        <div class="section-header" style="padding: 0 24px;">
+            <div class="section-label reveal reveal-up">FAQ</div>
+            <h2 class="section-title reveal reveal-up delay-1">客户常见疑问</h2>
+            <p class="section-subtitle reveal reveal-up delay-2" style="margin:0 auto">为您解答电梯服务相关问题</p>
+        </div>
+        <div class="faq-item reveal reveal-up"><div class="faq-question" onclick="toggleFaq(this)">电梯多久需要保养一次？<div class="faq-toggle">+</div></div><div class="faq-answer">根据国家规定，电梯应当至少每15天进行一次维护保养。我们建议每月进行2次常规保养，每季度进行1次深度保养。</div></div>
+        <div class="faq-item reveal reveal-up delay-1"><div class="faq-question" onclick="toggleFaq(this)">电梯故障应急响应需要多长时间？<div class="faq-toggle">+</div></div><div class="faq-answer">我们提供7×24小时应急服务。市区范围内30分钟内到达现场，郊区范围内1小时内到达现场。</div></div>
+        <div class="faq-item reveal reveal-up delay-2"><div class="faq-question" onclick="toggleFaq(this)">你们服务哪些电梯品牌？<div class="faq-toggle">+</div></div><div class="faq-answer">我们服务覆盖三菱、奥的斯、通力、蒂森克虏伯、日立、永大等国内外主流电梯品牌。</div></div>
+        <div class="faq-item reveal reveal-up delay-3"><div class="faq-question" onclick="toggleFaq(this)">电梯维保费用如何计算？<div class="faq-toggle">+</div></div><div class="faq-answer">维保费用根据电梯品牌、型号、楼层高度、使用频率等因素综合评估。我们提供免费上门勘察和透明报价。</div></div>
+        <div class="faq-item reveal reveal-up delay-4"><div class="faq-question" onclick="toggleFaq(this)">如何判断电梯是否需要改造？<div class="faq-toggle">+</div></div><div class="faq-answer">以下情况建议考虑改造：使用超过15年、故障率增加、能耗过高、无法满足需求、安全性能下降。</div></div>
     </section>
 
     <!-- ============ 联系 ============ -->
@@ -703,67 +993,21 @@ body {
             </div>
             <div class="contact-grid">
                 <div class="contact-cards reveal reveal-left">
-                    <div class="contact-card">
-                        <div class="contact-card-icon">📞</div>
-                        <div>
-                            <h4>服务热线</h4>
-                            <p>021-56309677</p>
-                            <p style="font-size:12px;color:#64748b">7×24 小时全天候服务</p>
-                        </div>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-card-icon">📧</div>
-                        <div>
-                            <h4>电子邮箱</h4>
-                            <p>info@hengxiang-elevator.com</p>
-                        </div>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-card-icon">📍</div>
-                        <div>
-                            <h4>公司地址</h4>
-                            <p>上海市崇明县城桥镇官山路 2 号 3 幢 C 区 2086 室</p>
-                        </div>
-                    </div>
-                    <div class="contact-card">
-                        <div class="contact-card-icon">🕐</div>
-                        <div>
-                            <h4>工作时间</h4>
-                            <p>周一至周六 08:00 – 18:00</p>
-                            <p style="font-size:12px;color:#64748b">紧急服务 24 小时响应</p>
-                        </div>
-                    </div>
+                    <div class="contact-card"><div class="contact-card-icon">📞</div><div><h4>服务热线</h4><p>021-56309677</p><p style="font-size:12px;color:#64748b">7×24 小时全天候服务</p></div></div>
+                    <div class="contact-card"><div class="contact-card-icon">📧</div><div><h4>电子邮箱</h4><p>info@hengxiang-elevator.com</p></div></div>
+                    <div class="contact-card"><div class="contact-card-icon">📍</div><div><h4>公司地址</h4><p>上海市崇明县城桥镇官山路 2 号 3 幢 C 区 2086 室</p></div></div>
+                    <div class="contact-card"><div class="contact-card-icon">🕐</div><div><h4>工作时间</h4><p>周一至周六 08:00 – 18:00</p><p style="font-size:12px;color:#64748b">紧急服务 24 小时响应</p></div></div>
                 </div>
                 <div class="contact-form-wrap reveal reveal-right">
                     <div class="form-title">在线咨询</div>
                     <p class="form-sub">填写表单，我们将在 30 分钟内与您联系</p>
                     <form onsubmit="event.preventDefault(); alert('感谢您的咨询，我们会尽快联系您！');">
                         <div class="form-row">
-                            <div class="form-group">
-                                <label>您的姓名 *</label>
-                                <input type="text" placeholder="请输入您的姓名" required>
-                            </div>
-                            <div class="form-group">
-                                <label>联系电话 *</label>
-                                <input type="tel" placeholder="请输入您的电话" required>
-                            </div>
+                            <div class="form-group"><label>您的姓名 *</label><input type="text" placeholder="请输入您的姓名" required></div>
+                            <div class="form-group"><label>联系电话 *</label><input type="tel" placeholder="请输入您的电话" required></div>
                         </div>
-                        <div class="form-group">
-                            <label>服务需求</label>
-                            <select>
-                                <option value="">请选择服务类型</option>
-                                <option>电梯安装</option>
-                                <option>电梯维修</option>
-                                <option>电梯保养</option>
-                                <option>电梯改造</option>
-                                <option>安全检测</option>
-                                <option>其他服务</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>详细描述</label>
-                            <textarea placeholder="请描述您的需求..."></textarea>
-                        </div>
+                        <div class="form-group"><label>服务需求</label><select><option value="">请选择服务类型</option><option>电梯安装</option><option>电梯维修</option><option>电梯保养</option><option>电梯改造</option><option>安全检测</option><option>其他服务</option></select></div>
+                        <div class="form-group"><label>详细描述</label><textarea placeholder="请描述您的需求..."></textarea></div>
                         <button type="submit" class="submit-btn">提交咨询 →</button>
                     </form>
                 </div>
@@ -777,10 +1021,8 @@ body {
             <div class="footer-grid">
                 <div class="footer-brand">
                     <div class="logo-area">
-                        <img class="logo-img" src="logo.png" alt="恒翔电梯" style="width:44px;height:44px">
-                        <div>
-                            <div class="logo-name">上海恒翔电梯工程有限公司</div>
-                        </div>
+                        <div class="logo-icon" style="width:44px;height:44px;font-size:18px">恒</div>
+                        <div><div class="logo-name">上海恒翔电梯工程有限公司</div></div>
                     </div>
                     <p>专注电梯服务 15 年，致力于为客户提供安全、可靠、高效的电梯解决方案。</p>
                     <img class="footer-license" src="biz_license.png" alt="营业执照">
@@ -816,34 +1058,199 @@ body {
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>© 2026 上海恒翔电梯工程有限公司 版权所有 | <a href="#">沪ICP备 XXXXXXXX 号</a></p>
+                <p>© 2026 上海恒翔电梯工程有限公司 版权所有 | <a href="https://beian.miit.gov.cn/" target="_blank">沪ICP备 XXXXXXXX 号</a></p>
             </div>
         </div>
     </footer>
 
     <!-- 返回顶部 -->
-    <a href="#home" style="position:fixed;bottom:32px;right:32px;width:48px;height:48px;background:linear-gradient(135deg,#0ea5e9,#06b6d4);border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:20px;text-decoration:none;opacity:0;visibility:hidden;transition:all 0.3s;z-index:999;box-shadow:0 8px 24px rgba(14,165,233,0.4)" id="backToTop">↑</a>
+    <a href="#home" class="back-to-top" id="backToTop">↑</a>
 
 <script>
-// 导航栏滚动
+// ==================== 加载动画 ====================
+window.addEventListener('load', () => {
+    setTimeout(() => document.getElementById('loader').classList.add('hidden'), 1200);
+});
+
+// ==================== 滚动进度条 ====================
+window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    document.getElementById('scrollProgress').style.width = (scrollTop / docHeight * 100) + '%';
+});
+
+// ==================== 粒子背景 ====================
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+let mouse = { x: 0, y: 0 };
+
+function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
+
+class Particle {
+    constructor() { this.reset(); }
+    reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.6;
+        this.speedY = (Math.random() - 0.5) * 0.6;
+        this.opacity = Math.random() * 0.4 + 0.1;
+    }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        // 鼠标吸引
+        const dx = mouse.x - this.x, dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 150) {
+            const force = (150 - dist) / 150;
+            this.x += dx * force * 0.015;
+            this.y += dy * force * 0.015;
+        }
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+    draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(14, 165, 233, ${this.opacity})`;
+        ctx.fill();
+    }
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => { p.update(); p.draw(); });
+    // 粒子连线
+    for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+            const dx = particles[i].x - particles[j].x;
+            const dy = particles[i].y - particles[j].y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 160) {
+                ctx.beginPath();
+                ctx.moveTo(particles[i].x, particles[i].y);
+                ctx.lineTo(particles[j].x, particles[j].y);
+                ctx.strokeStyle = `rgba(14, 165, 233, ${0.12 * (1 - dist / 160)})`;
+                ctx.lineWidth = 0.6;
+                ctx.stroke();
+            }
+        }
+    }
+    // 鼠标连线
+    particles.forEach(p => {
+        const dx = mouse.x - p.x, dy = mouse.y - p.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < 180) {
+            ctx.beginPath();
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.strokeStyle = `rgba(14, 165, 233, ${0.15 * (1 - dist / 180)})`;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+        }
+    });
+    requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ==================== 自定义光标 ====================
+const cursor = document.getElementById('cursor');
+const cursorDot = document.getElementById('cursorDot');
+const trailsContainer = document.getElementById('cursorTrails');
+const trails = [];
+const trailCount = 8;
+
+for (let i = 0; i < trailCount; i++) {
+    const t = document.createElement('div');
+    t.className = 'cursor-trail';
+    t.style.opacity = (1 - i / trailCount) * 0.4;
+    t.style.width = (7 - i * 0.5) + 'px';
+    t.style.height = (7 - i * 0.5) + 'px';
+    trailsContainer.appendChild(t);
+    trails.push({ el: t, x: 0, y: 0 });
+}
+
+let curX = 0, curY = 0;
+document.addEventListener('mousemove', e => {
+    mouse.x = e.clientX; mouse.y = e.clientY;
+    curX = e.clientX; curY = e.clientY;
+    cursor.style.left = e.clientX - 20 + 'px';
+    cursor.style.top = e.clientY - 20 + 'px';
+    cursorDot.style.left = e.clientX - 4 + 'px';
+    cursorDot.style.top = e.clientY - 4 + 'px';
+});
+
+function animateTrails() {
+    let x = curX, y = curY;
+    trails.forEach(t => {
+        t.x += (x - t.x) * 0.35;
+        t.y += (y - t.y) * 0.35;
+        t.el.style.left = t.x - 3 + 'px';
+        t.el.style.top = t.y - 3 + 'px';
+        x = t.x; y = t.y;
+    });
+    requestAnimationFrame(animateTrails);
+}
+animateTrails();
+
+// 光标悬浮效果
+document.querySelectorAll('a, button, .service-card, .adv-card, .brand-card, .case-card, .faq-question, .contact-card, .cred-item').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+});
+
+// ==================== 磁性按钮 ====================
+document.querySelectorAll('.magnetic').forEach(btn => {
+    btn.addEventListener('mousemove', e => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+    });
+    btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+});
+
+// ==================== 3D 卡片 ====================
+const heroCard = document.getElementById('heroCard');
+if (heroCard) {
+    heroCard.addEventListener('mousemove', e => {
+        const rect = heroCard.getBoundingClientRect();
+        const x = e.clientX - rect.left, y = e.clientY - rect.top;
+        const cx = rect.width / 2, cy = rect.height / 2;
+        heroCard.style.transform = `rotateX(${(y - cy) / 18}deg) rotateY(${(cx - x) / 18}deg) scale(1.02)`;
+        heroCard.style.setProperty('--mouse-x', (x / rect.width * 100) + '%');
+        heroCard.style.setProperty('--mouse-y', (y / rect.height * 100) + '%');
+    });
+    heroCard.addEventListener('mouseleave', () => { heroCard.style.transform = ''; });
+}
+
+// ==================== 服务卡片鼠标光效 ====================
+document.querySelectorAll('.service-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+        card.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+    });
+});
+
+// ==================== 导航栏滚动 ====================
 let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
     const btn = document.getElementById('backToTop');
     const scrollY = window.scrollY;
     navbar.classList.toggle('scrolled', scrollY > 50);
-    if (scrollY > 400) { btn.style.opacity = '1'; btn.style.visibility = 'visible'; }
-    else { btn.style.opacity = '0'; btn.style.visibility = 'hidden'; }
+    btn.classList.toggle('visible', scrollY > 400);
     lastScroll = scrollY;
 });
 
-// 滚动动画
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-// 平滑滚动
+// ==================== 平滑滚动 ====================
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', function(e) {
         e.preventDefault();
@@ -852,19 +1259,63 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     });
 });
 
-// 移动端菜单
+// ==================== 滚动动画 ====================
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.12, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ==================== 数字滚动 ====================
+const countObserver = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const suffix = el.querySelector('small') ? el.querySelector('small').outerHTML : '';
+        const duration = 2000;
+        const start = performance.now();
+        function step(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+            el.innerHTML = Math.floor(target * eased) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+            else el.innerHTML = target + suffix;
+        }
+        requestAnimationFrame(step);
+        countObserver.unobserve(el);
+    });
+}, { threshold: 0.5 });
+document.querySelectorAll('.count-up').forEach(el => countObserver.observe(el));
+
+// ==================== FAQ ====================
+function toggleFaq(el) {
+    el.parentElement.classList.toggle('active');
+}
+
+// ==================== 移动端菜单 ====================
 document.getElementById('navToggle').addEventListener('click', () => {
     const links = document.querySelector('.nav-links');
-    links.style.display = links.style.display === 'flex' ? 'none' : 'flex';
-    links.style.flexDirection = 'column';
-    links.style.position = 'absolute';
-    links.style.top = '100%';
-    links.style.left = '0';
-    links.style.right = '0';
-    links.style.background = 'rgba(15,23,42,0.98)';
-    links.style.padding = '24px';
-    links.style.borderRadius = '0 0 24px 24px';
-    links.style.border = '1px solid rgba(255,255,255,0.08)';
+    const isOpen = links.style.display === 'flex';
+    links.style.display = isOpen ? 'none' : 'flex';
+    if (!isOpen) {
+        links.style.flexDirection = 'column';
+        links.style.position = 'absolute';
+        links.style.top = '100%';
+        links.style.left = '0';
+        links.style.right = '0';
+        links.style.background = 'rgba(15,23,42,0.98)';
+        links.style.padding = '24px';
+        links.style.borderRadius = '0 0 24px 24px';
+        links.style.border = '1px solid rgba(255,255,255,0.08)';
+        links.style.backdropFilter = 'blur(24px)';
+    }
+});
+
+// ==================== 页面可见性 ====================
+document.addEventListener('visibilitychange', () => {
+    document.title = document.visibilityState === 'visible'
+        ? '上海恒翔电梯工程有限公司 | 电梯安装维修保养'
+        : '👋 欢迎回来 - 恒翔电梯';
 });
 </script>
 </body>
